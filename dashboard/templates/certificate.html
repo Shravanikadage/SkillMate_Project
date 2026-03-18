@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}Certificate - SkillMate{% endblock %}
+
+{% block content %}
+<div class="certificate">
+
+<h1>Certificate of Completion</h1>
+
+<p>This certifies that</p>
+
+<h2>{{ user.first_name }}</h2>
+
+<p>has successfully completed the course</p>
+
+<h3>{{ course.title }}</h3>
+
+<p>Date: {{ course.created_at|date:"d M Y" }}</p>
+
+</div>
+{% endblock %}

@@ -1,0 +1,172 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ course.title }} - SkillMate{% endblock %}
+
+{% block content %}
+
+<div class="detail-page">
+
+<div class="course-detail-container">
+
+<!-- HEADER -->
+<div class="course-header">
+    <h1>{{ course.title }}</h1>
+
+    <div class="course-meta">
+        <span class="meta-item">
+            <i class="fa-solid fa-user"></i>
+            {{ course.instructor }}
+        </span>
+
+        <span class="meta-item">
+            <i class="fa-solid fa-calendar"></i>
+            {{ course.created_at|date:"M d, Y" }}
+        </span>
+
+        <span class="meta-item">
+            <i class="fa-solid fa-users"></i>
+            {{ student_count }} Student{% if student_count != 1 %}s{% endif %}
+        </span>
+    </div>
+</div>
+
+
+<!-- COURSE INFO -->
+<div class="course-main-box">
+
+    {% if course.image %}
+    <div class="course-detail-image">
+        <img src="{{ course.image.url }}" alt="{{ course.title }}">
+    </div>
+    {% endif %}
+
+    <div class="course-about">
+        <h2>About This Course</h2>
+        <p>{{ course.description }}</p>
+    </div>
+
+</div>
+
+
+<!-- LESSONS SECTION -->
+{% if is_enrolled %}
+
+<div class="lesson-section">
+    <div class="progress-container">
+
+        <p><strong>Course Progress:</strong> {{ progress }}%</p>
+
+        <div class="progress-bar">
+        <div class="progress-fill" style="width: {{ progress }}%;"></div>
+        </div>
+
+    </div>
+    {% if progress == 100 and certificate_exists %}
+
+        <div class="certificate-box">
+
+        <a href="{% url 'certificate' course.id %}" class="certificate-btn">
+        <i class="fa-solid fa-award"></i>
+        Download Certificate
+        </a>
+
+        </div>
+
+    {% endif %}
+
+    <h2>Course Lessons</h2>
+
+    {% for lesson in lessons %}
+
+    <div class="lesson-row">
+
+        <!-- LEFT SIDE -->
+        <div class="lesson-title">
+            <i class="fa-solid fa-circle-play"></i>
+            {{ lesson.title }}
+        </div>
+
+        <!-- RIGHT SIDE -->
+        <div class="lesson-action">
+
+            <a href="{{ lesson.video_url }}" target="_blank" class="preview-btn">
+                Preview
+            </a>
+
+            <div class="lesson-complete">
+
+                <form method="POST" action="{% url 'complete_lesson' lesson.id %}">
+                {% csrf_token %}
+
+                <label class="checkbox-container">
+
+                    <input type="checkbox"
+                    onchange="this.form.submit()"
+                    {% if lesson.id in completed_lessons %}checked{% endif %}>
+
+                    {% if lesson.id in completed_lessons %}
+                    <span class="completed-text">Completed</span>
+                    {% else %}
+                    <span class="mark-text">Mark Complete</span>
+                    {% endif %}
+
+                </label>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    {% empty %}
+        <p>No lessons available.</p>
+    {% endfor %}
+
+</div>
+{% endif %}
+
+<!-- ACTION SECTION -->
+<div class="course-actions">
+
+    {% if user.is_authenticated %}
+    {% if is_enrolled %}
+        <button class="enroll-btn disabled-btn" disabled>
+            Already Enrolled
+        </button>
+
+    {% else %}
+
+        {% if course.price == 0 %}
+            <!-- Free Course -->
+            <a href="{% url 'enroll' course.id %}" class="enroll-btn">
+                Enroll Now
+            </a>
+        {% else %}
+            <!-- Paid Course -->
+            <a href="{% url 'payment_page' course.id %}" class="buy-btn">
+                Buy Now
+            </a>
+        {% endif %}
+
+    {% endif %}
+    {% else %}
+        <a href="{% url 'login' %}" class="enroll-btn">
+            Login to Enroll
+        </a>
+    {% endif %}
+
+            <a href="{% url 'course' %}" class="back-btn">
+                Back to Courses
+            </a>
+    </div>
+
+</div>
+
+    </div>
+
+</div>
+
+{% endblock %}

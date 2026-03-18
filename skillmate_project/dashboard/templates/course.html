@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Courses - SkillMate{% endblock %}
+
+{% block content %}
+
+<h2 style="margin-bottom: 30px;">Available Courses</h2>
+
+<div class="course-container">
+    {% for course in courses %}
+    <div class="course-card">
+
+        {% if course.image %}
+            <img src="{{ course.image.url }}" class="course-image">
+        {% endif %}
+
+        <div class="course-content">
+            
+
+            <h3>{{ course.title }}</h3>
+            <p class="instructor">by {{ course.instructor }}</p>
+
+            <p class="description">
+                {{ course.description|truncatewords:15 }}
+            </p>
+
+            <div class="card-footer">
+                <span class="price">₹{{ course.price }}</span>
+                <a href="{% url 'course_detail' course.id %}" class="view-btn">View</a>
+            </div>
+        </div>
+
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock %}

@@ -1,0 +1,100 @@
+{% extends 'base.html' %} {% block title %}Dashboard - SkillMate{% endblock %}
+{% block content %}
+
+<div class="dashboard-container">
+  <div class="dashboard-header">
+    <h1>Welcome, {{ user.first_name }}!</h1>
+  </div>
+  <div class="dashboard-layout">
+    <div class="dashboard-box">
+      <p>Course Enrolled</p>
+      <h3>{{ enrolled_count }}</h3>
+    </div>
+
+    <div class="dashboard-box">
+      <p>Total Courses</p>
+      <h3>{{ total_courses }}</h3>
+    </div>
+
+    <div class="dashboard-box">
+      <p>Completed Courses</p>
+      <h3>{{ completed_courses }}</h3>
+    </div>
+  </div>
+
+ <!-- Recent Enrollment Table -->
+<div class="recent-enrollment-section">
+    <h2>Recent Enrollments</h2>
+
+    <div class="table-container">
+        <table class="enrollment-table">
+            <thead>
+                <tr>
+                    <th>Course</th>
+                    <th>Enrollment Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for enroll in recent_enrollments %}
+                <tr>
+                    <td>{{ enroll.course.title }}</td>   
+                    <td>{{ enroll.enrolled_at|date:"d M Y" }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="3" class="no-data">No enrollments yet.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="progress-section">
+
+<h2>Your Progress</h2>
+
+<table class="enrollment-table">
+
+<thead>
+<tr>
+<th>Course</th>
+<th>Progress</th>
+</tr>
+</thead>
+
+<tbody>
+
+{% for p in progress_data %}
+
+<tr>
+
+<td>{{ p.course.title }}</td>
+
+<td>
+
+<div class="progress-bar">
+<div class="progress-fill" style="width: {{ p.percent }}%;"></div>
+</div>
+
+{{ p.percent }}%
+
+</td>
+
+</tr>
+
+{% empty %}
+
+<tr>
+<td colspan="2">No progress yet</td>
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+</div>
+
+{% endblock %}

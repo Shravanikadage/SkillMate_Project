@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block title %}Register - SkillMate{% endblock %}
+
+{% block content %}
+<div class="enroll-container">
+    <h2>Enroll in {{ course.title }}</h2>
+    <form method="post">
+        {% csrf_token %}
+
+        <div class="form-enroll">
+            <label for="First_name">First Name</label>
+            <input type="text" id="First_name" name="First_name" required>
+        </div>
+
+        <div class="form-enroll">
+            <label for="last_name">Last Name</label>
+            <input type="text" id="last_name" name="last_name" required>
+        </div>
+
+        <div class="form-enroll">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required>
+        </div>
+
+        <div class="form-enroll">
+            <label for="contact">Contact</label>
+            <input type="tel" id="contact" name="contact" required>
+        </div>
+
+        <button type="submit" class="btn btn-primary" style="width: 100%;">
+           Enroll
+        </button>
+    </form>
+</div>
+{% endblock %}

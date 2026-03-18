@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<h2 style="margin-bottom:30px;">My Courses</h2>
+
+{% if enrollments %}
+
+<div class="course-container">
+
+    {% for enrollment in enrollments %}
+    <div class="course-card">
+
+        {% if enrollment.course.image %}
+            <img src="{{ enrollment.course.image.url }}" class="course-image">
+        {% endif %}
+
+        <div class="course-content">
+
+            <span class="badge">Enrolled</span>
+
+            <h3>{{ enrollment.course.title }}</h3>
+
+            <p class="instructor">
+                by {{ enrollment.course.instructor }}
+            </p>
+
+            <p class="description">
+                {{ enrollment.course.description|truncatewords:15 }}
+            </p>
+
+            <div class="card-footer">
+                <a href="{% url 'course_detail' enrollment.course.id %}" class="view-btn">
+                    Continue
+                </a>
+            </div>
+
+        </div>
+
+    </div>
+    {% endfor %}
+
+</div>
+
+{% else %}
+
+<div style="text-align:center;margin-top:50px;">
+    <h3>No Courses Enrolled Yet</h3>
+    <p>Start learning by enrolling in a course.</p>
+
+    <a href="{% url 'course_list' %}" class="view-btn">
+        Browse Courses
+    </a>
+</div>
+
+{% endif %}
+
+{% endblock %}

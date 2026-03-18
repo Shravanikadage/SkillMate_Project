@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ course.title }} - SkillMate{% endblock %}
+
+{% block content %}
+
+<div class="detail-page">
+
+    <div class="course-detail-container">
+
+        <!-- HEADER -->
+        <div class="course-header">
+            <h1>{{ course.title }}</h1>
+
+            <div class="course-meta">
+                <span class="meta-item">
+                    <i class="fa-solid fa-user"></i>
+                    {{ course.instructor }}
+                </span>
+
+                <span class="meta-item">
+                    <i class="fa-solid fa-calendar"></i>
+                    {{ course.created_at|date:"M d, Y" }}
+                </span>
+
+                <span class="meta-item">
+                    <i class="fa-solid fa-users"></i>
+                    3 Students
+                </span>
+            </div>
+        </div>
+
+        <!-- IMAGE -->
+        {% if course.image %}
+        <div class="course-detail-image">
+            <img src="{{ course.image.url }}" alt="{{ course.title }}">
+        </div>
+        {% endif %}
+
+        <!-- ABOUT -->
+        <div class="course-about">
+            <h2>About This Course</h2>
+            <p>{{ course.description }}</p>
+        </div>
+
+        <!-- ACTION -->
+        <div class="course-actions">
+            <div class="price">
+                ₹{{ course.price }}
+            </div>
+
+            <div class="buttons">
+                <button class="enroll-btn">
+                    Enroll Now
+                </button>
+
+                <a href="{% url 'course' %}" class="back-btn">
+                    Back to Courses
+                </a>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
