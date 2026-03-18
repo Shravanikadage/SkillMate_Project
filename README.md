@@ -9,6 +9,13 @@
 
 ![course](https://github.com/user-attachments/assets/c6d66993-a4b5-4633-8394-c0f30cc82f43)
 
-![courseDetails](https://github.com/user-attachments/assets/98a4769a-4fa3-407b-946c-dd3007fcc3e6)
+![payment](https://github.com/user-attachments/assets/0284a290-37b7-4b20-bceb-3e9fe9204fdc) 
 
 ![myCourse](https://github.com/user-attachments/assets/a0ac5ab4-bcda-4201-922a-e5a4b119635e)
+
+![courseDetails](https://github.com/user-attachments/assets/98a4769a-4fa3-407b-946c-dd3007fcc3e6)
+
+![certificate](https://github.com/user-attachments/assets/4f27ebb6-66d2-4bf2-8fda-7a68a133a871)
+
+
+
