@@ -134,3 +134,7 @@ LOGOUT_REDIRECT_URL = 'home'
 
 LOGIN_URL = '/login/'
 LOGIN_REDIRECT_URL = '/dashboard/'
+
+
+RAZORPAY_KEY_ID = "rzp_test_SSJYg6sTYC9OQ2"
+RAZORPAY_KEY_SECRET = "mias66L7pbPDNFVolm1Fy3fQ"

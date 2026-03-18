@@ -1,0 +1,63 @@
+
+{% extends 'base.html' %}
+
+{% load static %}
+{% block content %}
+
+<div class="checkout-wrapper">
+    
+    <div class="course-summary">
+
+        <h2>Checkout</h2>
+
+        <div class="pymt-course-card">
+
+        <h3>{{ course.title }}</h3>
+
+        <p>Instructor: {{ course.instructor }}</p>
+
+        <div class="pymt-course-price">
+        ₹ {{ course.price }}
+        </div>
+
+        <p class="secure">
+        Secure Payment
+        </p>
+
+        <button id="rzp-button" class="pay-btn">
+            Pay ₹{{ course.price }}
+        </button>
+
+    </div>
+
+</div>
+
+
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+<script>
+var options = {
+    "key": "{{ razorpay_key }}",
+    "amount": "{{ course.price|floatformat:2 }}00",
+    "currency": "INR",
+    "name": "SkillMate",
+    "description": "{{ course.title }}",
+    "order_id": "{{ order_id }}",
+    "handler": function (response){
+        alert("Payment Successful!");
+        window.location.href = "/success/{{ course.id }}/";
+    },
+    "theme": {
+        "color": "#3399cc"
+    }
+};
+
+var rzp = new Razorpay(options);
+
+document.getElementById('rzp-button').onclick = function(e){
+    rzp.open();
+    e.preventDefault();
+}
+</script>
+
+{% endblock %}

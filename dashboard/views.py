@@ -211,7 +211,7 @@ def enroll_course(request, course_id):
             user=request.user,
             course=course
         )
-        return redirect('dashboard')
+        return redirect('my_courses')
 
     return render(request, 'enroll.html', {'course': course})
 
@@ -317,7 +317,7 @@ def certificate(request, course_id):
     width, height = landscape(A4)
 
     # Equal top and bottom margin
-    margin = 80  # Adjust this value if needed
+    margin = 80 
 
     # Border
     p.setStrokeColor(HexColor("#1a548e"))
@@ -382,8 +382,8 @@ def certificate(request, course_id):
     signature = ImageReader(signature_path)
 
     # Draw Signature slightly more to the right
-    signature_x = width - 250  # move 50px to the right
-    signature_y = margin + 40  # same vertical position
+    signature_x = width - 250  
+    signature_y = margin + 40  
 
     p.drawImage(
         signature,
@@ -403,12 +403,41 @@ def certificate(request, course_id):
 
     return response
 
+import razorpay
+from django.conf import settings
+from django.shortcuts import render, get_object_or_404
+from .models import Course
 
-def payment_page(request, course_id):
+def checkout(request, course_id):
     course = get_object_or_404(Course, id=course_id)
 
+    client = razorpay.Client(auth=(settings.RAZORPAY_KEY_ID, settings.RAZORPAY_KEY_SECRET))
+
+    payment = client.order.create({
+        "amount": int(course.price * 100),  # amount in paise
+        "currency": "INR",
+        "payment_capture": "1"
+    })
+
     context = {
-        'course': course
+        "course": course,
+        "order_id": payment['id'],
+        "razorpay_key": settings.RAZORPAY_KEY_ID
     }
 
-    return render(request, 'payment.html', context)
+    return render(request, "checkout.html", context)
+
+
+from django.http import HttpResponse
+
+from django.shortcuts import redirect, get_object_or_404
+from django.contrib.auth.decorators import login_required
+from .models import Course, Enrollment
+
+@login_required
+def payment_success(request, course_id):
+    course = get_object_or_404(Course, id=course_id)
+
+    return redirect('enroll', course_id=course.id)
+
+    

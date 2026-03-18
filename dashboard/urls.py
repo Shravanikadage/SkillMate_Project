@@ -13,5 +13,6 @@ urlpatterns = [
     path('complete-lesson/<int:lesson_id>/', views.complete_lesson, name='complete_lesson'),
     path('certificate/<int:course_id>/', views.certificate, name='certificate'),
     path('my-courses/', views.my_courses, name='my_courses'),
-    path('payment/<int:course_id>/', views.payment_page, name='payment_page'),
+    path('checkout/<int:course_id>/', views.checkout, name='checkout'),
+    path('success/<int:course_id>/', views.payment_success, name='payment_success'),
 ]

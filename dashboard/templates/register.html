@@ -4,6 +4,13 @@
 
 {% block content %}
 <div class="auth-container">
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert {{ message.tags }}">
+            {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
     <h2>Create Account</h2>
     <form method="post">
         {% csrf_token %}

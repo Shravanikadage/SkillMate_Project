@@ -146,7 +146,7 @@
             </a>
         {% else %}
             <!-- Paid Course -->
-            <a href="{% url 'payment_page' course.id %}" class="buy-btn">
+            <a href="{% url 'checkout' course.id %}" class="buy-btn">
                 Buy Now
             </a>
         {% endif %}
